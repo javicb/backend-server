@@ -1,7 +1,6 @@
 const { response } = require('express');
 const Usuario = require('../models/usuario');
 const bcrypt = require('bcryptjs');
-const usuario = require('../models/usuario');
 
 
 // Obtener usuarios
