@@ -1,5 +1,6 @@
 const express = require('express');
 const { dbConnection } = require('./db/config');
+require('dotenv').config();
 
 // Crear servidor express
 const app = express();
@@ -15,6 +16,6 @@ app.get('/', (request, response) => {
   })
 });
 
-app.listen(3000, () => {
-  console.log('Backend ejecutandose en puerto 3000');
+app.listen(process.env.PORT, () => {
+  console.log('Backend ejecutandose en puerto ' + process.env.PORT);
 });
