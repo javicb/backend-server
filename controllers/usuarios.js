@@ -1,25 +1,43 @@
+const { response } = require('express');
 const Usuario = require('../models/usuario');
 
-const getUsuarios = async (request, response) => {
+const getUsuarios = async (request, resp = response) => {
 
   const usuarios = await Usuario.find({}, 'nombre email role');
 
-  response.json({
+  resp.json({
     ok: true,
     usuarios
   })
 }
 
-const crearUsuario = async (request, response) => {
+const crearUsuario = async (request, resp = response) => {
 
-  const usuario = new Usuario(request.body);
+  const { email } = request.body;
 
-  await usuario.save();
+  try {
+    const existeEmail = await Usuario.findOne({ email })
 
-  response.json({
-    ok: true,
-    usuario
-  })
+    if (existeEmail) {
+      return resp.status(400).json({
+        ok: false,
+        msg: 'Ya existe un usuario registrado con ese correo'
+      });
+    }
+
+    const usuario = new Usuario(request.body);
+    await usuario.save();
+    resp.json({
+      ok: true,
+      usuario
+    })
+  } catch (error) {
+    console.log(error);
+    resp.status(500).json({
+      ok: false,
+      msg: 'Error inesperado... revisar logs'
+    });
+  }
 }
 
 module.exports = {
