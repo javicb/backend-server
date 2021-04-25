@@ -1,11 +1,25 @@
+const Usuario = require('../models/usuario');
 
 const getUsuarios = (request, response) => {
   response.json({
     ok: true,
-    usuarios: []
+    msg: 'getUsuarios'
+  })
+}
+
+const crearUsuario = async (request, response) => {
+
+  const usuario = new Usuario(request.body);
+
+  await usuario.save();
+
+  response.json({
+    ok: true,
+    usuario
   })
 }
 
 module.exports = {
-  getUsuarios
+  getUsuarios,
+  crearUsuario
 }
