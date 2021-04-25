@@ -5,7 +5,9 @@ const dbConnection = async () => {
     await mongoose.connect(process.env.BD_CNN, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
-      useCreateIndex: true
+      useCreateIndex: true,
+      // con esto evitamos el (node: 34300) deprecationwarning
+      useFindAndModify: false
     });
 
     console.log('BBDD online');
