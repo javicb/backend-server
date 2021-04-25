@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const { dbConnection } = require('./db/config');
 require('dotenv').config();
 
@@ -7,6 +8,10 @@ const app = express();
 
 // Conexión a bbdd
 dbConnection();
+
+// MIDDLEWAREs
+// Cors
+app.use(cors());
 
 // Rutas
 app.get('/', (request, response) => {
