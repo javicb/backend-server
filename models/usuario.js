@@ -28,4 +28,11 @@ const UsuarioSchema = Schema({
   }
 });
 
+// Extraemos campos que no queremos que se muestren
+// En este caso no vamos mostrar la contraseña
+UsuarioSchema.method('toJSON', function () {
+  const { password, ...object } = this.toObject();
+  return object;
+})
+
 module.exports = model('Usuario', UsuarioSchema);
