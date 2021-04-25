@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { getUsuarios, crearUsuario, updateUsuario } = require('../controllers/usuarios')
+const { getUsuarios, crearUsuario, updateUsuario, delteUsuario } = require('../controllers/usuarios')
 const { check } = require('express-validator');
 const { validarCampos } = require('../middlewares/validar-campos');
 
@@ -23,5 +23,8 @@ router.put('/:id', [
   check('role', 'El role es obligatorio').not().isEmpty(),
   validarCampos
 ], updateUsuario);
+
+// Borrar usuario
+router.delete('/:id', delteUsuario);
 
 module.exports = router;

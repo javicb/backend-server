@@ -42,7 +42,7 @@ const crearUsuario = async (request, resp = response) => {
 
     resp.json({
       ok: true,
-      usuario
+      nuevoUsuario
     })
   } catch (error) {
     console.log(error);
@@ -98,8 +98,40 @@ const updateUsuario = async (request, resp = response) => {
   }
 }
 
+// Borrado de usuario
+const delteUsuario = async (request, resp = response) => {
+  const id = request.params.id;
+
+  try {
+    const usuarioDB = await Usuario.findById(id);
+    if (!usuarioDB) {
+      return resp.status(404).json({
+        ok: false,
+        msn: 'No existe ese usuario'
+      })
+    }
+
+    // Borrar usuario
+    await Usuario.findByIdAndDelete(id);
+
+
+    resp.json({
+      ok: true,
+      msg: 'Usuario eliminado'
+    })
+  } catch (error) {
+    console.log(error);
+    resp.status(500).json({
+      ok: false,
+      msg: 'Error inesperado... revisar logs'
+    });
+  }
+
+}
+
 module.exports = {
   getUsuarios,
   crearUsuario,
-  updateUsuario
+  updateUsuario,
+  delteUsuario
 }
