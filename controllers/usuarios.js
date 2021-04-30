@@ -7,12 +7,27 @@ const { generarJWT } = require('../helpers/jwt');
 // Obtener usuarios
 const getUsuarios = async (request, resp = response) => {
 
-  const usuarios = await Usuario.find({}, 'nombre email role');
+  const desde = Number(request.query.desde) || 0;
+
+  // const usuarios = await Usuario
+  //   .find({}, 'nombre email role')
+  //   .skip(desde)
+  //   .limit(5);
+
+  // const total = await Usuario.count();
+
+  const [usuarios, total] = await Promise.all([
+    Usuario
+      .find({}, 'nombre email role')
+      .skip(desde)
+      .limit(5),
+    Usuario.count()
+  ]);
 
   resp.json({
     ok: true,
     usuarios,
-    id: request.id
+    total
   })
 }
 
