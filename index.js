@@ -19,6 +19,7 @@ app.use('/api/usuarios', require('./routes/usuarios'));
 app.use('/api/hospitales', require('./routes/hospitales'));
 app.use('/api/medicos', require('./routes/medicos'));
 app.use('/api/busquedaGlobal', require('./routes/busquedas'));
+app.use('/api/buscarColeccion', require('./routes/busquedas'));
 app.use('/api/login', require('./routes/auth'));
 
 
