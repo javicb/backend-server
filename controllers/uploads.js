@@ -1,9 +1,11 @@
 const { response } = require("express");
 const { v4: uuidv4 } = require('uuid');
+const { actualizarImagen } = require("../helpers/actualizar-imagen");
 
 const fileUpload = (request, resp = response) => {
 
   const tipo = request.params.tipo;
+  const id = request.params.id;
 
   // Validar tipo de recursos
   const tiposValidos = ['hospitales', 'medicos', 'usuarios'];
@@ -48,6 +50,10 @@ const fileUpload = (request, resp = response) => {
       console.log(err);
       return res.status(500).send(err);
     }
+
+    // Actualizar bbdd
+    actualizarImagen(tipo, id, nombreArchivo);
+
     resp.json({
       ok: true,
       msg: 'Arhivo subido',
